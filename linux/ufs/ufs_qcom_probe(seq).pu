@@ -4,10 +4,13 @@
 
 title ufs_qcom_probe
 
-send(a, b)
-return(a, b)
-send_async(b, c)
-return_async(b, c)
-send_self(b, self)
+box "ufs"
+participant "ufs-qcom.c" as ufs_qcom order 1
+participant "ufshcd-pltfrm.c" as ufshcd_pltfrm order 2
+participant "ufshcd.c" as ufshcd order 3
+end box
+
+send([, ufs_qcom, ufs_qcom_probe)
+return([, ufs_qcom, err)
 
 @enduml
