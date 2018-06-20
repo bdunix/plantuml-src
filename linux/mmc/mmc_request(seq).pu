@@ -1,6 +1,6 @@
 @startuml
 
-!include ../../include/helper.pu
+!include ../../include/helper.iuml
 
 title I/O请求处理
 
