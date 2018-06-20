@@ -1,6 +1,6 @@
 @startuml
 
-!include ../../include/helper.iuml
+!include ./helper.iuml
 
 title SDHCI中断服务
 

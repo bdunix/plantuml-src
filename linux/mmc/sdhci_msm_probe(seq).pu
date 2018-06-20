@@ -1,6 +1,6 @@
 @startumlsdhci_send_command
 
-!include ../../include/helper.iuml
+!include ./helper.iuml
 
 title SDHCI Probe （高通平台）
 

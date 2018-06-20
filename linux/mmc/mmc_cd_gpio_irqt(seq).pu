@@ -1,6 +1,6 @@
 @startuml
 
-!include ../../include/helper.iuml
+!include ./helper.iuml
 
 title SD卡插拔中断服务
 
