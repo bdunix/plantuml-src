@@ -5,9 +5,9 @@
 title ufs_qcom_probe
 
 send(a, b)
-return(b, a)
+return(a, b)
 send_async(b, c)
-return_async(c, b)
-send_self(b, call)
+return_async(b, c)
+send_self(b, self)
 
 @enduml

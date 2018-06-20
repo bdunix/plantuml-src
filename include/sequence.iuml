@@ -63,14 +63,14 @@ send_async(sndr, sndr, msg)
 !enddefinelong
 
 ' deactivated return
-!definelong return(sndr, rcvr)
-sndr -/ rcvr
+!definelong return(rcvr, sndr)
+rcvr \- sndr 
 deactivate sndr
 !enddefinelong
 
 ' deactivated return with message
-!definelong return(sndr, rcvr, msg)
-sndr -/ rcvr : msg
+!definelong return(rcvr, sndr, msg)
+rcvr \- sndr : msg
 deactivate sndr
 !enddefinelong
 
@@ -85,14 +85,14 @@ return(sndr, sndr, msg)
 !enddefinelong
 
 ' deactivated return asynchronously
-!definelong return_async(sndr, rcvr)
-sndr --/ rcvr
+!definelong return_async(rcvr, sndr)
+rcvr \-- sndr
 deactivate sndr
 !enddefinelong
 
 ' deactivated return asynchronously with message
-!definelong return_async(sndr, rcvr, msg)
-sndr --/ rcvr : msg
+!definelong return_async(rcvr, sndr, msg)
+rcvr \-- sndr : msg
 deactivate sndr
 !enddefinelong
 
@@ -105,6 +105,5 @@ return(sndr, sndr)
 !definelong return_self_async(sndr, msg)
 return(sndr, sndr, msg)
 !enddefinelong
-
 
 @enduml
