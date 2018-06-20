@@ -1,7 +1,0 @@
-@startuml
-
-!include ../../include/helper.pu
-
-title ufs_qcom_probe
-
-@enduml

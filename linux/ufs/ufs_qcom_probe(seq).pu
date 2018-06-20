@@ -1,0 +1,13 @@
+@startuml
+
+!include ../../include/sequence.iuml
+
+title ufs_qcom_probe
+
+send(a, b)
+return(b, a)
+send_async(b, c)
+return_async(c, b)
+send_self(b, call)
+
+@enduml

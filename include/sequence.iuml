@@ -1,0 +1,110 @@
+@startuml
+
+skinparam sequence {
+    'ArrowColor DeepSkyBlue
+    'ActorBorderColor DeepSkyBlue
+    'LifeLineBorderColor blue
+    'LifeLineBackgroundColor #A9DCDF
+    'ParticipantBorderColor DeepSkyBlue
+    'ParticipantBackgroundColor DodgerBlue
+    'ParticipantFontName Impact
+    'ParticipantFontSize 17
+    'ParticipantFontColor #A9DCDF
+    'ActorBackgroundColor aqua
+    'ActorFontColor DeepSkyBlue
+    'ActorFontSize 17
+    'ActorFontName Aapex
+    ParticipantPadding 20
+    BoxPadding 10
+}
+
+' activated send
+!definelong send(sndr, rcvr)
+sndr -\ rcvr
+activate rcvr
+!enddefinelong
+
+' activated send with message
+!definelong send(sndr, rcvr, msg)
+sndr -\ rcvr : msg
+activate rcvr
+!enddefinelong
+
+' activated send to self
+!definelong send_self(sndr)
+send(sndr, sndr)
+!enddefinelong
+
+' activated send to self with message
+!definelong send_self(sndr, msg)
+send(sndr, sndr, msg)
+!enddefinelong
+
+' activated send asynchronously
+!definelong send_async(sndr, rcvr)
+sndr --\ rcvr
+activate rcvr
+!enddefinelong
+
+' activated send asynchronously with message
+!definelong send_async(sndr, rcvr, msg)
+sndr --\ rcvr : msg
+activate rcvr
+!enddefinelong
+
+' activated send to self asynchronously
+!definelong send_self_async(sndr)
+send_async(sndr, sndr)
+!enddefinelong
+
+' activated send to self asynchronously with message
+!definelong send_self_async(sndr, msg)
+send_async(sndr, sndr, msg)
+!enddefinelong
+
+' deactivated return
+!definelong return(sndr, rcvr)
+sndr -/ rcvr
+deactivate sndr
+!enddefinelong
+
+' deactivated return with message
+!definelong return(sndr, rcvr, msg)
+sndr -/ rcvr : msg
+deactivate sndr
+!enddefinelong
+
+' deactivated return to self
+!definelong return_self(sndr)
+return(sndr, sndr)
+!enddefinelong
+
+' deactivated return to self with message
+!definelong return_self(sndr, msg)
+return(sndr, sndr, msg)
+!enddefinelong
+
+' deactivated return asynchronously
+!definelong return_async(sndr, rcvr)
+sndr --/ rcvr
+deactivate sndr
+!enddefinelong
+
+' deactivated return asynchronously with message
+!definelong return_async(sndr, rcvr, msg)
+sndr --/ rcvr : msg
+deactivate sndr
+!enddefinelong
+
+' deactivated return to self asynchronously
+!definelong return_self_async(sndr)
+return(sndr, sndr)
+!enddefinelong
+
+' deactivated return to self asynchronously with message
+!definelong return_self_async(sndr, msg)
+return(sndr, sndr, msg)
+!enddefinelong
+
+
+@enduml
