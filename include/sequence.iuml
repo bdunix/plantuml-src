@@ -20,13 +20,13 @@ skinparam sequence {
 
 ' activated send
 !definelong send(sndr, rcvr)
-sndr-\rcvr
+sndr -> rcvr
 activate rcvr
 !enddefinelong
 
 ' activated send with message
 !definelong send(sndr, rcvr, msg)
-sndr-\rcvr : ""msg""
+sndr -> rcvr : ""msg""
 activate rcvr
 !enddefinelong
 
@@ -42,13 +42,13 @@ send(sndr, sndr, msg)
 
 ' activated send asynchronously
 !definelong send_async(sndr, rcvr)
-sndr--\rcvr
+sndr ->o rcvr
 activate rcvr
 !enddefinelong
 
 ' activated send asynchronously with message
 !definelong send_async(sndr, rcvr, msg)
-sndr--\rcvr : ""msg""
+sndr ->o rcvr : ""msg""
 activate rcvr
 !enddefinelong
 
@@ -75,13 +75,13 @@ send_async(sndr, sndr, msg)
 
 ' deactivated return
 !definelong return(rcvr, sndr)
-rcvr/-sndr 
+sndr --> rcvr
 deactivate sndr
 !enddefinelong
 
 ' deactivated return with message
 !definelong return(rcvr, sndr, msg)
-rcvr/-sndr : //msg//
+sndr --> rcvr : //--msg--//
 deactivate sndr
 !enddefinelong
 
@@ -97,24 +97,24 @@ return(sndr, sndr, msg)
 
 ' deactivated return asynchronously
 !definelong return_async(rcvr, sndr)
-rcvr/--sndr
+sndr -->o rcvr
 deactivate sndr
 !enddefinelong
 
 ' deactivated return asynchronously with message
 !definelong return_async(rcvr, sndr, msg)
-rcvr/--sndr : //msg//
+sndr -->o rcvr : //--msg--//
 deactivate sndr
 !enddefinelong
 
 ' deactivated return to self asynchronously
 !definelong return_self_async(sndr)
-return(sndr, sndr)
+return_async(sndr, sndr)
 !enddefinelong
 
 ' deactivated return to self asynchronously with message
 !definelong return_self_async(sndr, msg)
-return(sndr, sndr, msg)
+return_async(sndr, sndr, msg)
 !enddefinelong
 
 @enduml
