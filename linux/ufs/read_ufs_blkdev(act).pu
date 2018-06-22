@@ -1,0 +1,47 @@
+@startuml
+
+|fs/ext4/file.c|
+:generic_file_read_iter;
+|mm/filemap.c|
+:do_generic_file_read;
+-> mapping->a_ops->readpage;
+|fs/ext4/inode.c|
+:ext4_readpage;
+|fs/ext4/readpage.c|
+:ext4_mpage_readpages;
+:ext4_submit_bio_read;
+|blk-core.c|
+:submit_bio;
+:generic_make_request;
+-> q->make_request_fn;
+:blk_queue_bio;
+note right
+之前在创建 scsi device 时，
+scsi_alloc_sdev->scsi_alloc_queue->
+__scsi_alloc_queue->blk_init_queue->
+blk_init_queue_node->blk_init_allocated_queue中执行了:
+blk_queue_make_request(q, blk_queue_bio);
+使 q->make_request_fn = blk_queue_bio
+end note
+:__blk_run_queue;
+:__blk_run_queue_uncond;
+-> q->request_fn(q);
+|scsi_lib.c|
+:scsi_request_fn;
+note right
+之前在创建 scsi device 时，
+scsi_alloc_sdev->scsi_alloc_queue中执行了：
+q = __scsi_alloc_queue(sdev->host, scsi_request_fn);
+继而在 
+__scsi_alloc_queue->blk_init_queue->
+blk_init_queue_node->blk_init_allocated_queue中使
+q->request_fn = scsi_request_fn
+end note
+:scsi_dispatch_cmd;
+-> host->hostt->queuecommand;
+|ufshcd.c|
+:ufshcd_queuecommand;
+:ufshcd_send_command;
+:ufshcd_writel(..., REG_UTP_TRANSFER_REQ_DOOR_BELL);
+
+@enduml

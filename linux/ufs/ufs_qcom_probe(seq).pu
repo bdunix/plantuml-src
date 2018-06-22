@@ -25,16 +25,26 @@ call(ufshcd_pltfrm, ufshcd, ufshcd_init)
 call_self_async(ufshcd, ufshcd_async_scan)
 call_self(ufshcd, ufshcd_probe_hba)
 call_self(ufshcd, ufshcd_link_startup)
+note right: Initialize unipro link startup.
+call_self(ufshcd, ufshcd_vops_link_startup_notify)
+call(ufshcd, ufs_qcom, ufs_qcom_link_startup_notify)
+return(ufshcd, ufs_qcom, ufs_qcom_link_startup_notify)
+return_self(ufshcd, ufshcd_vops_link_startup_notify)
+call_self(ufshcd, ufshcd_dme_link_startup)
+note right: Notify Unipro to perform link startup.
+call_self(ufshcd, ufshcd_send_uic_cmd)
+return_self(ufshcd, ufshcd_send_uic_cmd)
+return_self(ufshcd, ufshcd_dme_link_startup)
 return_self(ufshcd, ufshcd_link_startup)
 call_self(ufshcd, ufshcd_verify_dev_init)
 note right
-send NOP OUT UPIU and wait for NOP IN response to
+Send NOP OUT UPIU and wait for NOP IN response to
 check whether UTP layer is ready after a reset.
 end note
 return_self(ufshcd, ufshcd_verify_dev_init)
 call_self(ufshcd, ufshcd_complete_dev_init)
 note right
-host sets and polls fDeviceInit flag to
+Host sets and polls fDeviceInit flag to
 check UFS device initialization is complete.
 end note
 return_self(ufshcd, ufshcd_complete_dev_init)
@@ -43,7 +53,7 @@ return_self(ufshcd, ufs_read_device_desc_data)
 call_self(ufshcd, ufshcd_scsi_add_wlus)
 call(ufshcd, scsi_scan, __scsi_add_device)
 note right
-add device for UFS W-LUN as their
+Add device for UFS W-LUN as their
 nexus(host,channel,id,lun) is known.
 end note
 call_self(scsi_scan, scsi_alloc_target)
@@ -67,22 +77,22 @@ return_self(scsi_scan, scsi_probe_and_add_lun)
 return(ufshcd, scsi_scan, __scsi_add_device)
 return_self(ufshcd, ufshcd_scsi_add_wlus)
 call(ufshcd, scsi_scan, scsi_scan_host)
-note right: scan the given adapter.
+note right: Scan the given adapter.
 call_self_async(scsi_scan, do_scan_async)
 call_self(scsi_scan, do_scsi_scan_host)
 return_self(scsi_scan, do_scsi_scan_host)
 call_self(scsi_scan, scsi_scan_host_selected)
-note right: scan wild card.
+note right: Scan wild card.
 call_self(scsi_scan, scsi_scan_channel)
 return_self(scsi_scan, scsi_scan_channel)
 call_self(scsi_scan, __scsi_scan_target)
 call_self(scsi_scan, scsi_alloc_target)
 return_self(scsi_scan, scsi_alloc_target)
 call_self(scsi_scan, scsi_probe_and_add_lun)
-note right: scan LUN 0 of SCSI target.
+note right: Scan LUN 0 of SCSI target.
 return_self(scsi_scan, scsi_probe_and_add_lun)
 call_self(scsi_scan, scsi_sequential_lun_scan)
-note right: sequentially scan a SCSI target from LUN 1.
+note right: Sequentially scan a SCSI target from LUN 1.
 call_self(scsi_scan, scsi_probe_and_add_lun)
 return_self(scsi_scan, scsi_probe_and_add_lun)
 return_self(scsi_scan, scsi_sequential_lun_scan)
@@ -93,6 +103,9 @@ return_self(scsi_scan, scsi_finish_async_scan)
 return_self_async(scsi_scan, do_scan_async)
 return(ufshcd, scsi_scan, scsi_scan_host)
 return_self(ufshcd, ufshcd_probe_hba)
+call_self(ufshcd, ufshcd_extcon_register)
+note right: For external UFS card.
+return_self(ufshcd, ufshcd_extcon_register)
 return_self_async(ufshcd, ufshcd_async_scan)
 return(ufshcd_pltfrm, ufshcd, ufshcd_init)
 return(ufs_qcom, ufshcd_pltfrm, ufshcd_pltfrm_init)

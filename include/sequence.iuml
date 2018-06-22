@@ -26,7 +26,7 @@ activate rcvr
 
 ' activated send with message
 !definelong send(sndr, rcvr, msg)
-sndr->rcvr : ""msg""
+sndr->rcvr : msg
 activate rcvr
 !enddefinelong
 
@@ -48,7 +48,7 @@ activate rcvr
 
 ' activated send asynchronously with message
 !definelong send_async(sndr, rcvr, msg)
-sndr-[#blue]>rcvr : ""msg""
+sndr-[#blue]>rcvr : msg
 activate rcvr
 !enddefinelong
 
